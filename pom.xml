@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>library</module>
+        <module>main-library</module>
         <module>webstart</module>
         <module>webservice</module>
         <module>jdbcservice</module>
