@@ -1,4 +1,4 @@
-package pl.dev.mentoring;
+package pl.devs.mentoring.webstart;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package pl.dev.mentoring;
+package pl.devs.mentoring.webstart;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
