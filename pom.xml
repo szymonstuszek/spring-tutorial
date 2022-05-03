@@ -13,6 +13,7 @@
         <module>webstart</module>
         <module>webservice</module>
         <module>jdbcservice</module>
+        <module>restrepos</module>
     </modules>
 
 </project>
