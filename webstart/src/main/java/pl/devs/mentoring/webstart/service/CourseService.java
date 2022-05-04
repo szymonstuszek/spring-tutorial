@@ -1,6 +1,7 @@
 package pl.devs.mentoring.webstart.service;
 
 import org.springframework.stereotype.Service;
+import pl.devs.mentoring.webstart.exception.CourseNotFoundException;
 import pl.devs.mentoring.webstart.model.Course;
 
 import javax.annotation.PostConstruct;
@@ -56,6 +57,6 @@ public class CourseService {
         return courses.stream()
                 .filter(course -> course.getId().equals(id))
                 .findFirst()
-                .orElse(new Course());
+                .orElseThrow(() -> new CourseNotFoundException(id));
     }
 }
