@@ -59,4 +59,8 @@ public class CourseService {
                 .findFirst()
                 .orElseThrow(() -> new CourseNotFoundException(id));
     }
+
+    public void createCourse(Course course) {
+        courses.add(course);
+    }
 }

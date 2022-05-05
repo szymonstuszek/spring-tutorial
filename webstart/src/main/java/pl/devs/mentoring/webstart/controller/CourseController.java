@@ -1,5 +1,6 @@
 package pl.devs.mentoring.webstart.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.devs.mentoring.webstart.model.Course;
 import pl.devs.mentoring.webstart.service.CourseService;
@@ -23,5 +24,11 @@ public class CourseController {
     @GetMapping("/courses/{id}")
     public Course getCourse(@PathVariable("id") Long id) {
         return courseService.getCourse(id);
+    }
+
+    @PostMapping("/courses")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createCourse(@RequestBody Course course) {
+        courseService.createCourse(course);
     }
 }
