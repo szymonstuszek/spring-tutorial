@@ -63,4 +63,27 @@ public class CourseService {
     public void createCourse(Course course) {
         courses.add(course);
     }
+
+    public void updateCourse(Course courseToUpdate) {
+        Long id = courseToUpdate.getId();
+        int index = Math.toIntExact(id) - 1;
+
+        courses.stream()
+                .filter(course -> course.getId().equals(id))
+                .findAny()
+                .ifPresentOrElse(
+                        course -> courses.set(index, courseToUpdate),
+                        () -> {throw new CourseNotFoundException(id);}
+                );
+    }
+
+    public void deleteCourse(Long id) {
+        courses.stream()
+                .filter(course -> course.getId().equals(id))
+                .findAny()
+                .ifPresentOrElse(
+                        courses::remove,
+                        () -> {throw new CourseNotFoundException(id);}
+                );
+    }
 }
