@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.devs.mentoring.webstart.model.Course;
 import pl.devs.mentoring.webstart.service.CourseService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class CourseController {
 
     @PostMapping("/courses")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCourse(@RequestBody Course course) {
+    public void createCourse(@RequestBody @Valid Course course) {
         courseService.createCourse(course);
     }
 

@@ -1,15 +1,22 @@
 package pl.devs.mentoring.webstart.model;
 
-//task: find what annonation allows to return non-null values
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class Course {
     private Long id;
-    private String title;
-    private String author;
-    private String category;
-    private String description;
 
-    //stwórz konstruktor i gettery
+    @NotBlank(message = "Title can not be blank")
+    private String title;
+
+    @NotBlank(message = "Author can not be blank")
+    private String author;
+
+    @NotBlank(message = "Category can not be blank")
+    private String category;
+
+    @Size(min = 10, message = "Description should be at least 10 characters long")
+    private String description;
 
     public Course(Long id, String title, String author, String category, String description) {
         this.id = id;
