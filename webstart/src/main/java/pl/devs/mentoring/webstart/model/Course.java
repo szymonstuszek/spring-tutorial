@@ -15,7 +15,7 @@ public class Course {
     @NotBlank(message = "Category can not be blank")
     private String category;
 
-    @Size(min = 15, message = "${validatedValue} should be at least {min} characters long")
+    @Size(min = 15, message = "Description should be at least {min} characters long")
     private String description;
 
     public Course(Long id, String title, String author, String category, String description) {
