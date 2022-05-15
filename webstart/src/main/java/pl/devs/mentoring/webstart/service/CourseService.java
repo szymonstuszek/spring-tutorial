@@ -16,28 +16,28 @@ public class CourseService {
     @PostConstruct
     public void initCourses() {
         courses.add(new Course(
-                1L,
+                5L,
                 "Git basics",
                 "John",
                 "Tools",
                 "Basics of Git version control")
         );
         courses.add(new Course(
-                2L,
+                6L,
                 "Java concurrency",
                 "Marc",
                 "Programming",
                 "Java multithreading and concurrency")
         );
         courses.add(new Course(
-                3L,
+                7L,
                 "SQL Procedures",
                 "Steven",
                 "Programming",
                 "Writing performant procedures in SQL")
         );
         courses.add(new Course(
-                4L,
+                8L,
                 "Algorithm interview prep",
                 "Steven",
                 "Interview",
@@ -66,13 +66,17 @@ public class CourseService {
 
     public void updateCourse(Course courseToUpdate) {
         Long id = courseToUpdate.getId();
-        int index = Math.toIntExact(id) - 1;
 
         courses.stream()
                 .filter(course -> course.getId().equals(id))
                 .findAny()
                 .ifPresentOrElse(
-                        course -> courses.set(index, courseToUpdate),
+                        c -> {
+                            c.setAuthor(courseToUpdate.getAuthor());
+                            c.setTitle(courseToUpdate.getTitle());
+                            c.setCategory(courseToUpdate.getCategory());
+                            c.setDescription(courseToUpdate.getDescription());
+                        },
                         () -> {throw new CourseNotFoundException(id);}
                 );
     }
