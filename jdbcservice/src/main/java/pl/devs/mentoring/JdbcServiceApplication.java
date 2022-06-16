@@ -7,6 +7,17 @@ public class JdbcServiceApplication {
 	private final static String USER = "<username>";
 	private final static String PASSWORD = "<password>";
 	private final static String QUERY = "SELECT * FROM mentors";
+	private final static String CREATE_TABLE_QUERY =
+			"""
+			CREATE TABLE courses
+			(
+			   id INT PRIMARY KEY,
+			   title VARCHAR(50) NOT NULL,
+			   description VARCHAR(250) NOT NULL,
+			   price NUMERIC NOT NULL,
+			   created_on DATE DEFAULT CURRENT_DATE
+			);
+			""";
 
 
 	public static void main(String[] args) {
@@ -14,20 +25,7 @@ public class JdbcServiceApplication {
 				.getConnection(URL, USER, PASSWORD)) {
 
 			Statement statement = connection.createStatement();
-
-			ResultSet resultSet = statement.executeQuery(QUERY);
-
-			if (resultSet != null) {
-				int rowCount = 0;
-
-				while (resultSet.next()) {
-					System.out.println(resultSet.getString("ID"));
-					System.out.println(resultSet.getString("name"));
-					System.out.println(resultSet.getString("surname"));
-				}
-				System.out.println("Count of registered mentors: " + rowCount);
-			}
-
+			statement.execute(CREATE_TABLE_QUERY);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
