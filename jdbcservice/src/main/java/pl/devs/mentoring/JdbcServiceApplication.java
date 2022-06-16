@@ -7,10 +7,12 @@ public class JdbcServiceApplication {
 	private final static String USER = "<username>";
 	private final static String PASSWORD = "<password>";
 	private final static String QUERY = "SELECT * FROM mentors";
+	private final static String PREPARED_QUERY = "SELECT name, surname FROM mentors WHERE id = ?";
+	private final static String PREPARED_QUERY_FOR_NAME = "SELECT name, surname FROM mentors WHERE name LIKE ?";
 
 	private final static String INSERT_QUERY = """
 			INSERT INTO courses (id, title, description, price, created_on)
-			VALUES (5, 'Java basics', 'Introduction to the Java programming language', 49.99, '07-23-2022');
+			VALUES (1, 'Java basics', 'Introduction to the Java programming language', 49.99, '07-23-2022');
 			""";
 
 	private final static String CREATE_TABLE_QUERY = """
@@ -28,12 +30,23 @@ public class JdbcServiceApplication {
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager
 				.getConnection(URL, USER, PASSWORD)) {
-
-			Statement statement = connection.createStatement();
-			statement.execute(INSERT_QUERY);
+			searchForName("J%", connection);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+	}
+
+	public static void searchForName(String nameLike, Connection connection) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement(PREPARED_QUERY_FOR_NAME);
+		statement.setString(1, nameLike);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+			String name = resultSet.getString("name");
+			String surname = resultSet.getString("surname");
+			System.out.println("Retrieved: " + name + " " + surname);
 		}
 	}
 }
