@@ -7,8 +7,13 @@ public class JdbcServiceApplication {
 	private final static String USER = "<username>";
 	private final static String PASSWORD = "<password>";
 	private final static String QUERY = "SELECT * FROM mentors";
-	private final static String CREATE_TABLE_QUERY =
-			"""
+
+	private final static String INSERT_QUERY = """
+			INSERT INTO courses (id, title, description, price, created_on)
+			VALUES (5, 'Java basics', 'Introduction to the Java programming language', 49.99, '07-23-2022');
+			""";
+
+	private final static String CREATE_TABLE_QUERY = """
 			CREATE TABLE courses
 			(
 			   id INT PRIMARY KEY,
@@ -25,7 +30,7 @@ public class JdbcServiceApplication {
 				.getConnection(URL, USER, PASSWORD)) {
 
 			Statement statement = connection.createStatement();
-			statement.execute(CREATE_TABLE_QUERY);
+			statement.execute(INSERT_QUERY);
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
