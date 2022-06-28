@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class JdbcServiceApplication {
 	private final static String URL = "jdbc:postgresql://localhost:5432/test-pgAdmin";
-	private final static String USER = "<username>";
-	private final static String PASSWORD = "<password>";
+    private final static String USER = "postgres";
+    private final static String PASSWORD = "postgresql";
 	private final static String QUERY = "SELECT * FROM mentors";
 	private final static String PREPARED_QUERY = "SELECT name, surname FROM mentors WHERE id = ?";
 	private final static String PREPARED_QUERY_FOR_NAME = "SELECT name, surname FROM mentors WHERE name LIKE ?";
@@ -23,7 +23,7 @@ public class JdbcServiceApplication {
 
     private final static String INCORRECT_PREPARED_INSERT_QUERY = """
             INSERT INTO courses (id, title, description, price, created_on)
-            VALUES (?, 'Java basics', 'Introduction to the Java programming language', 49.99, '07-23-2022');
+            VALUES (?, 'Java basiZzcs', 'Introduction to the Java programming language', 49.99, '07-23-2022');
             """;
 
     private final static String CREATE_TABLE_QUERY = """
@@ -38,23 +38,25 @@ public class JdbcServiceApplication {
             """;
 
     public static void main(String[] args) {
-        try (Connection connection = DriverManager
-                .getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(QUERY)) {
 
-            connection.setAutoCommit(false);
+            if (resultSet != null) {
+                int rowCount = 0;
 
-            for (int i = 0; i < 3; i++) {
-                PreparedStatement statement = connection.prepareStatement(PREPARED_INSERT_QUERY);
-                statement.setInt(1, new Random().nextInt());
-                statement.execute();
+                while (resultSet.next()) {
+                    rowCount++;
+                }
+                System.out.println("Count of registered mentors: " + rowCount);
             }
 
-            connection.commit();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
 
     public static void searchForName(String nameLike, Connection connection) throws SQLException {
