@@ -27,7 +27,7 @@ public class JdbcServiceApplication {
             """;
 
     private final static String CREATE_TABLE_QUERY = """
-            CREATE TABLE courses
+            CREATE TABLE chickens
             (
                id INT PRIMARY KEY,
                title VARCHAR(50) NOT NULL,
@@ -39,24 +39,14 @@ public class JdbcServiceApplication {
 
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(QUERY)) {
+             Statement statement = connection.createStatement()) {
 
-            if (resultSet != null) {
-                int rowCount = 0;
-
-                while (resultSet.next()) {
-                    rowCount++;
-                }
-                System.out.println("Count of registered mentors: " + rowCount);
-            }
-
+            statement.execute(CREATE_TABLE_QUERY);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-
 
 
     public static void searchForName(String nameLike, Connection connection) throws SQLException {

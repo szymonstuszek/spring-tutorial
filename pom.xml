@@ -14,6 +14,7 @@
         <module>webservice</module>
         <module>jdbcservice</module>
         <module>restrepos</module>
+        <module>hibernate-start</module>
     </modules>
 
 </project>
